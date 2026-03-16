@@ -1,0 +1,47 @@
+# MCPShield Default Detection Rules
+# These rules are built into the binary and can be overridden via config.
+
+[[rules]]
+id = "TP001"
+name = "Hidden instruction tags"
+description = "Tool description contains HTML/XML tags commonly used to hide instructions"
+severity = "critical"
+category = "tool_poisoning"
+patterns = ["<IMPORTANT>", "</IMPORTANT>", "<SYSTEM>", "</SYSTEM>", "<HIDDEN>", "<!-- "]
+enabled = true
+
+[[rules]]
+id = "TP002"
+name = "Suspicious action keywords"
+description = "Tool description contains keywords associated with prompt injection"
+severity = "high"
+category = "tool_poisoning"
+patterns = ["do not mention", "do not tell the user", "mandatory security verification", "ignore previous", "you must first"]
+enabled = true
+
+[[rules]]
+id = "TP003"
+name = "Sensitive path references"
+description = "Tool description references sensitive file paths"
+severity = "high"
+category = "tool_poisoning"
+patterns = ["~/.ssh/", ".env", "id_rsa", ".aws/", ".kube/config", "credentials"]
+enabled = true
+
+[[rules]]
+id = "CL001"
+name = "SSH Private Key"
+description = "Output contains SSH private key"
+severity = "critical"
+category = "credential_leak"
+patterns = ["-----BEGIN.*PRIVATE KEY-----"]
+enabled = true
+
+[[rules]]
+id = "CL002"
+name = "API Key patterns"
+description = "Output contains common API key formats"
+severity = "critical"
+category = "credential_leak"
+patterns = ["AKIA[0-9A-Z]{16}", "gh[ps]_[A-Za-z0-9_]{36,}", "sk-ant-", "sk-[A-Za-z0-9]{32,}"]
+enabled = true
