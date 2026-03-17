@@ -2,4 +2,8 @@ pub mod audit;
 pub mod compliance;
 pub mod config;
 pub mod events;
+pub mod honeypot;
 pub mod scan;
+pub mod servers;
+pub mod threats;
+pub mod trend;

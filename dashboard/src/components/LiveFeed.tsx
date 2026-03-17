@@ -1,64 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import { usePollingApi } from '../hooks/useApi'
+import { getEvents } from '../api/client'
+import { EventRow } from './EventRow'
 
-interface AuditEvent {
-  timestamp: string
-  event_type: string
-  severity: string
-  server: string
-  tool?: string
-  description: string
+interface LiveFeedProps {
+  maxItems?: number
 }
 
-const severityIcon: Record<string, string> = {
-  critical: '🚨',
-  high: '🔴',
-  medium: '⚠️',
-  low: '🔵',
-  info: 'ℹ️',
-}
+export function LiveFeed({ maxItems = 20 }: LiveFeedProps) {
+  const { data: events } = usePollingApi(getEvents, 5000)
 
-export function LiveFeed() {
-  const [events, setEvents] = useState<AuditEvent[]>([])
-
-  useEffect(() => {
-    fetch('/api/events')
-      .then(res => res.json())
-      .then(setEvents)
-      .catch(console.error)
-
-    const interval = setInterval(() => {
-      fetch('/api/events')
-        .then(res => res.json())
-        .then(setEvents)
-        .catch(console.error)
-    }, 5000)
-
-    return () => clearInterval(interval)
-  }, [])
-
-  if (events.length === 0) {
-    return <div style={{ color: '#666', padding: 16 }}>No events yet. Run a scan to generate events.</div>
-  }
+  const items = (events ?? []).slice(0, maxItems)
 
   return (
-    <div style={{ maxHeight: 400, overflow: 'auto', border: '1px solid #dee2e6', borderRadius: 8 }}>
-      {events.slice(0, 50).map((event, i) => (
-        <div key={i} style={{
-          padding: '8px 12px',
-          borderBottom: '1px solid #eee',
-          fontSize: 13,
-          fontFamily: 'monospace',
-        }}>
-          <span>{severityIcon[event.severity] || '•'} </span>
-          <span style={{ color: '#666' }}>
-            {new Date(event.timestamp).toLocaleTimeString()}
-          </span>
-          {' '}
-          <strong>{event.server}</strong>
-          {event.tool && <span>.{event.tool}</span>}
-          {' — '}
-          <span>{event.description}</span>
+    <div className="space-y-0.5 overflow-y-auto max-h-[480px] pr-1">
+      {items.length === 0 && (
+        <div className="text-center py-8 text-[#3f3f46] text-sm">
+          No events recorded
         </div>
+      )}
+      {items.map((event, i) => (
+        <EventRow key={event.id} event={event} index={i} />
       ))}
     </div>
   )
