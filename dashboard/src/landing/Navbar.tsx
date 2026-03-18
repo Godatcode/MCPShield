@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { ShieldCheck } from 'lucide-react'
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -30,17 +29,16 @@ export function Navbar() {
       }}
     >
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-        <div style={{
-          width: 28,
-          height: 28,
-          background: '#7c5bf0',
-          borderRadius: 7,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-          <ShieldCheck size={14} color="#fff" />
-        </div>
+        <img
+          src="/logo.png"
+          alt="Praesidio"
+          style={{
+            width: 32,
+            height: 32,
+            borderRadius: 7,
+            objectFit: 'cover',
+          }}
+        />
         <span style={{
           fontFamily: "'Clash Display', sans-serif",
           fontWeight: 600,

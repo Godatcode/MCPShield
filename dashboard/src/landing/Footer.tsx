@@ -1,4 +1,3 @@
-import { ShieldCheck } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 export function Footer() {
@@ -14,17 +13,16 @@ export function Footer() {
       <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 40 }}>
         <div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
-            <div style={{
-              width: 24,
-              height: 24,
-              background: '#7c5bf0',
-              borderRadius: 6,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-              <ShieldCheck size={12} color="#fff" />
-            </div>
+            <img
+              src="/logo.png"
+              alt="Praesidio"
+              style={{
+                width: 28,
+                height: 28,
+                borderRadius: 6,
+                objectFit: 'cover',
+              }}
+            />
             <span style={{
               fontFamily: "'Clash Display', sans-serif",
               fontWeight: 600,

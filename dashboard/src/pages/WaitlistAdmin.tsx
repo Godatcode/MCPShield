@@ -122,7 +122,7 @@ export default function WaitlistAdmin() {
       {/* Header */}
       <div style={{ padding: '24px 40px', borderBottom: '1px solid rgba(255,255,255,0.06)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-          <div style={{ width: 32, height: 32, background: '#7c5bf0', borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16 }}>🛡️</div>
+          <img src="/logo.png" alt="Praesidio" style={{ width: 32, height: 32, borderRadius: 8, objectFit: 'cover' }} />
           <h1 style={{ fontSize: 18, fontWeight: 600, letterSpacing: '-0.02em' }}>Waitlist Admin</h1>
         </div>
         <button onClick={fetchAll} style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, padding: '8px 16px', color: '#8a8a9a', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, fontSize: 13 }}>
