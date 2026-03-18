@@ -1,0 +1,24 @@
+{
+  "name": "Praesidio — Runtime Security for AI Agents",
+  "short_name": "Praesidio",
+  "description": "Runtime firewall for AI agents. Detect tool poisoning, credential leaks, and supply chain attacks in MCP servers.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#08080c",
+  "theme_color": "#7c5bf0",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["security", "developer tools", "productivity"],
+  "lang": "en-US"
+}

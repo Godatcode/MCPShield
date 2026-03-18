@@ -1,7 +1,8 @@
 {
-  "name": "mcpshield-dashboard",
+  "name": "praesidio",
   "version": "0.2.0",
   "private": true,
+  "homepage": "https://praesidio.live",
   "type": "module",
   "scripts": {
     "dev": "vite",
