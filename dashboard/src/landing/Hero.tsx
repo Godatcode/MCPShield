@@ -106,28 +106,6 @@ export function Hero() {
       />
 
       <div className="hero-stagger" style={{ position: 'relative', zIndex: 1, maxWidth: 900 }}>
-        {/* Pill badge */}
-        <div>
-          <span
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: 8,
-              padding: '6px 16px',
-              borderRadius: 100,
-              border: '1px solid rgba(124, 91, 240, 0.25)',
-              background: 'rgba(124, 91, 240, 0.08)',
-              fontSize: 12,
-              fontWeight: 500,
-              color: '#a78bfa',
-              marginBottom: 32,
-              letterSpacing: '0.02em',
-            }}
-          >
-            <span>🛡️</span> Runtime AI Agent Security
-          </span>
-        </div>
-
         <h1
           style={{
             fontFamily: "'Clash Display', sans-serif",

@@ -83,7 +83,7 @@ export function CTA() {
             Ready to protect your AI agents?
           </h2>
           <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.5)', marginBottom: 40 }}>
-            Free for developers. Team plans from $49/mo.
+            Be the first to know when we launch.
           </p>
 
           {status === 'success' || status === 'already' ? (
