@@ -42,16 +42,12 @@ export function CTA() {
     <section id="cta" style={{ padding: '120px 40px 80px' }}>
       <div
         ref={sectionRef}
+        className="cta-glass"
         style={{
           maxWidth: 700,
           margin: '0 auto',
           textAlign: 'center',
           padding: '80px 48px',
-          background: 'rgba(255,255,255,0.05)',
-          border: '1px solid rgba(255,255,255,0.08)',
-          borderRadius: 20,
-          position: 'relative',
-          overflow: 'hidden',
         }}
       >
         {/* Subtle orb */}
