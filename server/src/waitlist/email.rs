@@ -7,6 +7,7 @@ struct ResendEmail {
     to: Vec<String>,
     subject: String,
     html: String,
+    reply_to: String,
 }
 
 #[derive(Debug, Serialize)]
@@ -15,6 +16,7 @@ struct ResendBatchEmail {
     to: String,
     subject: String,
     html: String,
+    reply_to: String,
 }
 
 #[derive(Debug, Deserialize)]
@@ -35,14 +37,18 @@ pub struct ResendBatchItem {
 pub struct ResendClient {
     api_key: String,
     from_address: String,
+    reply_to: String,
     client: Client,
 }
 
 impl ResendClient {
     pub fn new(api_key: String, from_address: String) -> Self {
+        let reply_to = std::env::var("RESEND_REPLY_TO")
+            .unwrap_or_else(|_| "arka25.cp@gmail.com".to_string());
         Self {
             api_key,
             from_address,
+            reply_to,
             client: Client::new(),
         }
     }
@@ -54,6 +60,7 @@ impl ResendClient {
             to: vec![to.to_string()],
             subject: subject.to_string(),
             html: html.to_string(),
+            reply_to: self.reply_to.clone(),
         };
 
         let resp = self.client
@@ -89,6 +96,7 @@ impl ResendClient {
                 to: to.clone(),
                 subject: subject.to_string(),
                 html: html.to_string(),
+                reply_to: self.reply_to.clone(),
             }
         }).collect();
 
@@ -124,25 +132,38 @@ impl ResendClient {
     }
 
     /// Generate a styled welcome email HTML.
+    /// Uses light background to avoid spam filters (dark bg emails often get flagged).
     pub fn welcome_email_html(email: &str) -> String {
         format!(r#"<!DOCTYPE html>
-<html>
-<head><meta charset="utf-8"></head>
-<body style="margin:0;padding:0;background:#08080c;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
-  <div style="max-width:560px;margin:0 auto;padding:48px 32px;">
-    <div style="text-align:center;margin-bottom:40px;">
-      <div style="display:inline-block;width:40px;height:40px;background:#7c5bf0;border-radius:10px;line-height:40px;font-size:18px;">🛡️</div>
-      <h1 style="color:#f0f0f2;font-size:24px;font-weight:600;margin:16px 0 0;">Welcome to Praesidio</h1>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Praesidio</title>
+</head>
+<body style="margin:0;padding:0;background:#f4f4f7;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#1a1a2e;">
+  <div style="max-width:560px;margin:0 auto;padding:40px 20px;">
+    <div style="background:#ffffff;border-radius:12px;padding:40px 32px;box-shadow:0 1px 3px rgba(0,0,0,0.08);">
+      <div style="text-align:center;margin-bottom:32px;">
+        <h1 style="font-size:22px;font-weight:600;margin:0 0 8px;color:#1a1a2e;">Welcome to Praesidio</h1>
+        <p style="font-size:14px;color:#6b7280;margin:0;">You're on the early access list.</p>
+      </div>
+      <p style="font-size:15px;line-height:1.7;color:#374151;margin:0 0 16px;">
+        We're building the runtime firewall your AI agents need. Fully offline, no API keys required, covering all 20 OWASP MCP and Agentic security risks.
+      </p>
+      <p style="font-size:15px;line-height:1.7;color:#374151;margin:0 0 24px;">
+        We'll notify you when it's your turn to get access. In the meantime, you'll be the first to hear about updates.
+      </p>
+      <div style="text-align:center;margin:24px 0;">
+        <a href="https://praesidio.live" style="display:inline-block;padding:12px 28px;background:#7c5bf0;color:#ffffff;text-decoration:none;border-radius:8px;font-size:14px;font-weight:500;">Visit Praesidio</a>
+      </div>
     </div>
-    <p style="color:rgba(255,255,255,0.6);font-size:15px;line-height:1.7;">
-      You're on the early access list. We're building the runtime firewall your AI agents need — fully offline, no API keys, covering all 20 OWASP MCP + Agentic risks.
-    </p>
-    <p style="color:rgba(255,255,255,0.6);font-size:15px;line-height:1.7;">
-      We'll reach out when it's your turn to get access. In the meantime, you'll be the first to hear about updates.
-    </p>
-    <div style="margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.08);">
-      <p style="color:rgba(255,255,255,0.3);font-size:12px;margin:0;">
+    <div style="text-align:center;margin-top:24px;padding:0 20px;">
+      <p style="font-size:12px;color:#9ca3af;margin:0 0 8px;">
         This email was sent to {email} because you signed up for Praesidio early access.
+      </p>
+      <p style="font-size:12px;color:#9ca3af;margin:0;">
+        Praesidio &mdash; Runtime security for AI agents
       </p>
     </div>
   </div>
