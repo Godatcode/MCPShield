@@ -48,7 +48,9 @@ async fn main() -> std::io::Result<()> {
         .and_then(|p| p.parse().ok())
         .unwrap_or(8080u16);
 
-    tracing::info!("MCPShield API server starting on http://127.0.0.1:{}", port);
+    let host = std::env::var("HOST").unwrap_or_else(|_| "0.0.0.0".to_string());
+
+    tracing::info!("MCPShield API server starting on http://{}:{}", host, port);
 
     HttpServer::new(move || {
         let cors = Cors::default()
@@ -84,7 +86,7 @@ async fn main() -> std::io::Result<()> {
             .route("/api/admin/waitlist/send", web::post().to(waitlist::routes::admin_send_email))
             .route("/api/admin/waitlist/emails", web::get().to(waitlist::routes::admin_email_logs))
     })
-    .bind(("127.0.0.1", port))?
+    .bind((&host[..], port))?
     .run()
     .await
 }
