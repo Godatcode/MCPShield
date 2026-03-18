@@ -1,0 +1,14 @@
+# Praesidio — Runtime Security for AI Agents
+# https://praesidio.live
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://praesidio.live/sitemap.xml
+
+# Disallow dashboard (requires auth in production)
+Disallow: /app/
+
+# Crawl delay (optional)
+Crawl-delay: 1

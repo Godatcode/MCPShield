@@ -1,7 +1,6 @@
 import { useCallback, useRef } from 'react'
 import { useLandingReveal } from '../hooks/useLandingReveal'
 import { ArrowRight } from 'lucide-react'
-import { Link } from 'react-router-dom'
 import { ParticleCanvas } from './ParticleCanvas'
 
 const logos = ['Anthropic', 'Cursor', 'OpenAI', 'Vercel', 'Stripe', 'GitHub', 'Cloudflare', 'Linear']
@@ -198,8 +197,8 @@ export function Hero() {
           >
             Get Early Access <ArrowRight size={14} />
           </a>
-          <Link
-            to="/app"
+          <a
+            href="#how-it-works"
             className="landing-cta-secondary"
             style={{
               display: 'inline-flex',
@@ -217,8 +216,8 @@ export function Hero() {
               cursor: 'pointer',
             }}
           >
-            View Dashboard
-          </Link>
+            See How It Works
+          </a>
         </div>
 
         {/* Dashboard preview with 3D mouse-tilt */}

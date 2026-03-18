@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { ShieldCheck } from 'lucide-react'
 
 export function Navbar() {
@@ -75,8 +74,8 @@ export function Navbar() {
         >
           Compare
         </a>
-        <Link
-          to="/app"
+        <a
+          href="#cta"
           style={{
             fontSize: 13,
             fontWeight: 500,
@@ -84,13 +83,16 @@ export function Navbar() {
             textDecoration: 'none',
             padding: '7px 16px',
             borderRadius: 8,
-            background: 'rgba(124, 91, 240, 0.12)',
-            border: '1px solid rgba(124, 91, 240, 0.2)',
+            background: 'linear-gradient(135deg, #7c5bf0 0%, #4a8bf5 100%)',
+            border: '1px solid rgba(124, 91, 240, 0.3)',
             transition: 'all 0.2s ease',
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 6,
           }}
         >
-          Dashboard
-        </Link>
+          Get Early Access
+        </a>
       </div>
     </nav>
   )

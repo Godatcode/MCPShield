@@ -34,7 +34,7 @@ export function Settings() {
     <div>
       <div ref={revealHeader} className="reveal" style={{ marginBottom: 48 }}>
         <h1 className="page-title">Settings</h1>
-        <p className="page-subtitle">Current MCPShield configuration (read-only)</p>
+        <p className="page-subtitle">Current Praesidio configuration (read-only)</p>
       </div>
 
       <div ref={revealContent} className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>

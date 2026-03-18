@@ -1,4 +1,4 @@
-// Comprehensive mock data for MCPShield Dashboard
+// Comprehensive mock data for Praesidio Dashboard
 
 function hoursAgo(h: number): string {
   return new Date(Date.now() - h * 3600_000).toISOString()
@@ -250,7 +250,7 @@ const mockEvents: AuditEvent[] = [
     server: 'filesystem',
     tool: 'write_file',
     title: 'Permission check passed',
-    description: 'Write operation within allowed directory scope. Path: ~/projects/mcpshield/README.md',
+    description: 'Write operation within allowed directory scope. Path: ~/projects/praesidio/README.md',
     category: 'permission',
   },
   {
@@ -748,8 +748,8 @@ const mockOWASPAgentic: ComplianceItem[] = [
 const mockConfig: ConfigData = {
   global: {
     log_level: 'info',
-    audit_dir: '~/.mcpshield/audit',
-    pin_file: '~/.mcpshield/pins.json',
+    audit_dir: '~/.praesidio/audit',
+    pin_file: '~/.praesidio/pins.json',
     block_on_critical: true,
     alert_on_warning: true,
   },

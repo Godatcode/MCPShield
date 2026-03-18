@@ -5,7 +5,7 @@
   <img src="https://img.shields.io/badge/License-MIT-green?style=for-the-badge" alt="MIT License"/>
 </p>
 
-<h1 align="center">🛡️ MCPShield</h1>
+<h1 align="center">🛡️ Praesidio</h1>
 
 <p align="center">
   <strong>The open-source security platform for MCP servers and AI agents.</strong><br/>
@@ -30,34 +30,34 @@
 
 **Existing solutions** require external API calls, leak your tool descriptions to third parties, or only do static scanning. None provide runtime protection.
 
-**MCPShield** is different: a Rust-native security platform that sits between your MCP client and servers, providing real-time defense — entirely offline, with optional LLM-powered deep analysis.
+**Praesidio** is different: a Rust-native security platform that sits between your MCP client and servers, providing real-time defense — entirely offline, with optional LLM-powered deep analysis.
 
 ## Quick Start
 
 ```bash
 # Install
-cargo install mcpshield
+cargo install praesidio
 
 # Scan all your MCP configs for vulnerabilities
-mcpshield scan
+praesidio scan
 
 # Start the runtime proxy (intercepts + filters all MCP traffic)
-mcpshield proxy
+praesidio proxy
 
 # Launch the security dashboard
-mcpshield dashboard
+praesidio dashboard
 
 # Check if any tools have been tampered with
-mcpshield pin verify
+praesidio pin verify
 
 # Deploy a honeypot to catch attackers
-mcpshield honeypot start
+praesidio honeypot start
 ```
 
 ## Example Output
 
 ```
-🛡️  MCPShield v0.1.0 — Scanning MCP configurations...
+🛡️  Praesidio v0.1.0 — Scanning MCP configurations...
 
 📂 Found 3 MCP configs:
    ✓ Claude Desktop    (~/.config/Claude/claude_desktop_config.json)
@@ -135,7 +135,7 @@ mcpshield honeypot start
 
 ## OWASP Coverage
 
-MCPShield maps to **all 20 risks** across both OWASP MCP Top 10 and OWASP Agentic Top 10:
+Praesidio maps to **all 20 risks** across both OWASP MCP Top 10 and OWASP Agentic Top 10:
 
 | OWASP MCP Top 10 | Status | Module |
 |---|---|---|
@@ -166,7 +166,7 @@ MCPShield maps to **all 20 risks** across both OWASP MCP Top 10 and OWASP Agenti
 ## Configuration
 
 ```toml
-# mcpshield.toml
+# praesidio.toml
 
 [global]
 block_on_critical = true
@@ -200,7 +200,7 @@ scope = "read-only"
 MCP Client (Claude Desktop, Cursor, Claude Code)
         │
         ▼
-┌─── MCPShield Proxy ────────────────────────┐
+┌─── Praesidio Proxy ────────────────────────┐
 │                                            │
 │  Inbound:   Scanner → Unicode → Pinner     │
 │  LLM:       Deep analysis (if suspicious)  │
@@ -217,7 +217,7 @@ MCP Servers (only clean traffic passes through)
 
 ## Comparison
 
-| | MCPShield | mcp-scan (Snyk) | Onyx Security | Strata |
+| | Praesidio | mcp-scan (Snyk) | Onyx Security | Strata |
 |---|---|---|---|---|
 | Fully offline | ✅ | ❌ | ❌ | ❌ |
 | Open source | ✅ MIT | ✅ | ❌ | ❌ |
@@ -232,7 +232,7 @@ MCP Servers (only clean traffic passes through)
 
 ## Contributing
 
-MCPShield is MIT licensed and welcomes contributions. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+Praesidio is MIT licensed and welcomes contributions. See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 Priority areas:
 - Detection rules for new attack patterns
@@ -246,7 +246,7 @@ Priority areas:
 Arka 
 <img src="https://user-images.githubusercontent.com/74038190/235224431-e8c8c12e-6826-47f1-89fb-2ddad83b3abf.gif" width="300">
 <br><br>
-If MCPShield helps protect your MCP setup, consider starring the repo ⭐
+If Praesidio helps protect your MCP setup, consider starring the repo ⭐
 
 ## License
 

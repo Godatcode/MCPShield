@@ -1,28 +1,18 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Layout } from './components/Layout'
-import { Overview } from './pages/Overview'
-import { Servers } from './pages/Servers'
-import { Threats } from './pages/Threats'
-import { Compliance } from './pages/Compliance'
-import { Honeypot } from './pages/Honeypot'
-import { AuditLog } from './pages/AuditLog'
-import { Settings } from './pages/Settings'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import LandingPage from './pages/LandingPage'
+import WaitlistAdmin from './pages/WaitlistAdmin'
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/app" element={<Layout />}>
-          <Route index element={<Overview />} />
-          <Route path="servers" element={<Servers />} />
-          <Route path="threats" element={<Threats />} />
-          <Route path="compliance" element={<Compliance />} />
-          <Route path="honeypot" element={<Honeypot />} />
-          <Route path="audit" element={<AuditLog />} />
-          <Route path="settings" element={<Settings />} />
-        </Route>
+        {/* Admin waitlist dashboard — hidden route, not linked publicly */}
+        <Route path="/admin/waitlist" element={<WaitlistAdmin />} />
+        {/* Redirect /app to landing page */}
+        <Route path="/app/*" element={<Navigate to="/" replace />} />
+        {/* Catch-all redirect */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   )

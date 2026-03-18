@@ -20,3 +20,6 @@ tracing-subscriber = { workspace = true }
 actix-web = "4"
 actix-ws = "0.3"
 actix-cors = "0.7"
+rusqlite = { version = "0.31", features = ["bundled"] }
+reqwest = { workspace = true }
+uuid = { workspace = true }

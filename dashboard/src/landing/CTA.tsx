@@ -1,15 +1,41 @@
 import { useState } from 'react'
 import { useLandingReveal } from '../hooks/useLandingReveal'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Loader2 } from 'lucide-react'
+
+const API_BASE = import.meta.env.VITE_API_URL || ''
 
 export function CTA() {
   const [email, setEmail] = useState('')
-  const [submitted, setSubmitted] = useState(false)
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'already' | 'error'>('idle')
+  const [errorMsg, setErrorMsg] = useState('')
   const sectionRef = useLandingReveal({ y: 30 })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (email.includes('@')) setSubmitted(true)
+    if (!email.includes('@') || !email.includes('.')) return
+
+    setStatus('loading')
+    setErrorMsg('')
+
+    try {
+      const resp = await fetch(`${API_BASE}/api/waitlist`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email.trim(), source: 'landing_cta' }),
+      })
+
+      const data = await resp.json()
+
+      if (resp.ok) {
+        setStatus(data.new ? 'success' : 'already')
+      } else {
+        setErrorMsg(data.error || 'Something went wrong.')
+        setStatus('error')
+      }
+    } catch {
+      setErrorMsg('Could not connect. Please try again.')
+      setStatus('error')
+    }
   }
 
   return (
@@ -60,7 +86,7 @@ export function CTA() {
             Free for developers. Team plans from $49/mo.
           </p>
 
-          {submitted ? (
+          {status === 'success' || status === 'already' ? (
             <div style={{
               padding: '16px 32px',
               borderRadius: 10,
@@ -70,49 +96,66 @@ export function CTA() {
               fontSize: 14,
               fontWeight: 500,
             }}>
-              You&apos;re on the list. We&apos;ll be in touch.
+              {status === 'success'
+                ? "You're on the list! Check your inbox for a welcome email."
+                : "You're already on the list. We'll be in touch!"}
             </div>
           ) : (
-            <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
-              <input
-                type="email"
-                placeholder="you@company.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                style={{
-                  width: 300,
-                  padding: '12px 20px',
-                  borderRadius: 10,
-                  border: '1px solid rgba(255,255,255,0.1)',
-                  background: 'rgba(255,255,255,0.04)',
-                  color: '#f0f0f2',
-                  fontSize: 14,
-                  fontFamily: "'Inter', sans-serif",
-                  outline: 'none',
-                  transition: 'border-color 0.2s',
-                }}
-                onFocus={(e) => e.currentTarget.style.borderColor = 'rgba(124, 91, 240, 0.4)'}
-                onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'}
-              />
-              <button
-                type="submit"
-                className="landing-cta-primary"
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 8,
-                  padding: '12px 24px',
-                  borderRadius: 10,
-                  background: 'linear-gradient(135deg, #7c5bf0 0%, #4a8bf5 100%)',
-                  color: '#fff',
-                  fontSize: 14,
-                  fontWeight: 500,
-                  border: 'none',
-                  cursor: 'pointer',
-                }}
-              >
-                Get Early Access <ArrowRight size={14} />
-              </button>
+            <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+              <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
+                <input
+                  type="email"
+                  placeholder="you@company.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={status === 'loading'}
+                  style={{
+                    width: 300,
+                    padding: '12px 20px',
+                    borderRadius: 10,
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    background: 'rgba(255,255,255,0.04)',
+                    color: '#f0f0f2',
+                    fontSize: 14,
+                    fontFamily: "'Inter', sans-serif",
+                    outline: 'none',
+                    transition: 'border-color 0.2s',
+                    opacity: status === 'loading' ? 0.6 : 1,
+                  }}
+                  onFocus={(e) => e.currentTarget.style.borderColor = 'rgba(124, 91, 240, 0.4)'}
+                  onBlur={(e) => e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'}
+                />
+                <button
+                  type="submit"
+                  disabled={status === 'loading'}
+                  className="landing-cta-primary"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    padding: '12px 24px',
+                    borderRadius: 10,
+                    background: 'linear-gradient(135deg, #7c5bf0 0%, #4a8bf5 100%)',
+                    color: '#fff',
+                    fontSize: 14,
+                    fontWeight: 500,
+                    border: 'none',
+                    cursor: status === 'loading' ? 'wait' : 'pointer',
+                    opacity: status === 'loading' ? 0.7 : 1,
+                  }}
+                >
+                  {status === 'loading' ? (
+                    <>Joining... <Loader2 size={14} className="animate-spin" /></>
+                  ) : (
+                    <>Get Early Access <ArrowRight size={14} /></>
+                  )}
+                </button>
+              </div>
+              {status === 'error' && (
+                <p style={{ color: '#ef4444', fontSize: 13, marginTop: 4 }}>
+                  {errorMsg}
+                </p>
+              )}
             </form>
           )}
         </div>
