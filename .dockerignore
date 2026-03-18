@@ -1,0 +1,12 @@
+target/
+dashboard/
+node_modules/
+.env
+*.db
+.git/
+.claude/
+*.md
+docs/
+threat-db/
+tests/
+run.sh
